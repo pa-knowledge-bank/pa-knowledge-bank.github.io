@@ -1,1 +1,295 @@
-<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Public Administration Knowledge Bank</title><style>body{margin:0;background:#f7f6f2;color:#1b2c27;font:16px system-ui}header,main{max-width:1100px;margin:auto;padding:32px}header{display:flex;justify-content:space-between;border-bottom:1px solid #d8ded7;font-size:13px;letter-spacing:.1em}h1{font:normal clamp(38px,6vw,70px) Georgia;margin:24px 0 12px;max-width:780px}p{line-height:1.7;color:#5a6962}.tag{color:#557f68;letter-spacing:.16em;font-size:12px}.hero{padding:55px 0}.stats{display:flex;gap:12px;flex-wrap:wrap}.stats span,button{background:white;border:1px solid #dce3dc;padding:12px 16px;border-radius:5px;color:#31523e}.bar{display:flex;gap:10px;flex-wrap:wrap;margin:32px 0}input,select{font:inherit;border:1px solid #d7dfd7;border-radius:5px;background:white;padding:14px}input{flex:1;min-width:220px}.box{background:white;border:1px solid #e1e6df;border-radius:8px;padding:40px;text-align:center}.box h2{font:normal 28px Georgia}.journals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:45px}.journal{border-top:2px solid #567e64;padding:16px 0}.journal strong{font:normal 24px Georgia}footer{padding:50px 0;color:#78857d;font-size:13px}a{color:#416f53}</style></head><body><header><span>THE KNOWLEDGE BANK</span><span>PUBLIC ADMINISTRATION / RESEARCH LIBRARY</span></header><main><section class="hero"><span class="tag">A LIVING RESEARCH LIBRARY</span><h1>Ideas worth coming back to.</h1><p>公共行政研究知识库。收集新文章，用容易理解的语言记录研究问题、发现与启发。</p><div class="stats"><span>四本核心期刊</span><span>每日文献追踪</span><span>开放获取全文阅读</span></div></section><span class="tag">THE LIBRARY</span><h2>文章库 <small style="font-weight:normal;color:#839087"> / Papers</small></h2><div class="bar"><input id="search" placeholder="搜索标题、主题或关键词"><select id="journal"><option>全部期刊</option><option>PAR</option><option>JPART</option><option>PA</option><option>JPAM</option></select></div><div class="box"><span class="tag">READY TO GROW</span><h2>你的研究书架，正在等待第一篇文章。</h2><p>每日文献推送已设置。文章入库功能尚未连接；目前这里不会自动显示推送内容。</p></div><div class="journals"><div class="journal"><strong>PAR</strong><p>Public Administration Review</p></div><div class="journal"><strong>JPART</strong><p>Journal of Public Administration Research and Theory</p></div><div class="journal"><strong>PA</strong><p>Public Administration</p></div><div class="journal"><strong>JPAM</strong><p>Journal of Policy Analysis and Management</p></div></div><footer>PUBLIC ADMINISTRATION KNOWLEDGE BANK · A SPACE FOR IDEAS THAT LAST</footer></main></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ed">
+  <meta name="description" content="公共行政研究知识库：检索、整理与重访值得借鉴的研究。">
+  <title>公共行政知识库 — Public Administration Knowledge Bank</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f3ed;
+      --surface: #fbfaf6;
+      --white: #fffefa;
+      --ink: #1d2c28;
+      --muted: #718079;
+      --line: #dce1d9;
+      --green: #315c4a;
+      --green-dark: #203d33;
+      --green-soft: #e8eee7;
+      --gold: #ba8c55;
+      --serif: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    button, input, select { font: inherit; }
+    a { color: inherit; }
+    .shell { min-height: 100vh; display: grid; grid-template-columns: 250px minmax(0, 1fr); }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column;
+      padding: 30px 22px 22px; background: var(--green-dark); color: #f4f3ed;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid #789383; border-radius: 50%; color: #e7c99b; font: 22px var(--serif); }
+    .brand-name { font: 18px/1.08 var(--serif); letter-spacing: -.02em; }
+    .brand-name small { display: block; margin-top: 5px; color: #b5c5ba; font: 9px/1.2 system-ui,sans-serif; letter-spacing: .13em; text-transform: uppercase; }
+    .side-label { margin: 54px 0 14px 12px; color: #99afa1; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+    .side-nav { display: grid; gap: 6px; }
+    .side-nav a { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 6px; color: #ced8d0; font-size: 13px; text-decoration: none; transition: background .18s,color .18s; }
+    .side-nav a:hover, .side-nav a[aria-current="page"] { background: #315346; color: #fffefa; }
+    .nav-icon { width: 18px; text-align: center; color: #d8bd92; font-size: 15px; }
+    .side-bottom { margin-top: auto; border-top: 1px solid #496456; padding: 18px 10px 0; color: #b9c7be; font-size: 11px; line-height: 1.7; }
+    .side-bottom a { color: #e7c99b; text-decoration: none; }
+    .main { min-width: 0; }
+    .topbar { height: 62px; padding: 0 clamp(22px,5vw,76px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; letter-spacing: .08em; }
+    .topbar-right { display: flex; gap: 18px; align-items: center; }
+    .live-mark { display: inline-flex; gap: 7px; align-items: center; color: var(--green); letter-spacing: .04em; }
+    .live-mark::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #7e9c75; }
+    .content { max-width: 1280px; margin: 0 auto; padding: 0 clamp(22px,5vw,76px) 54px; }
+    .hero { position: relative; overflow: hidden; padding: clamp(42px,7vw,88px) 0 46px; border-bottom: 1px solid var(--line); }
+    .hero::after { content: "知"; position: absolute; right: 4%; top: 5px; color: rgba(49,92,74,.045); font: clamp(190px,27vw,360px)/1 var(--serif); pointer-events: none; }
+    .eyebrow { color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { position: relative; z-index: 1; max-width: 720px; margin: 21px 0 14px; font: 400 clamp(38px,6vw,72px)/1.08 var(--serif); letter-spacing: -.045em; }
+    h1 span { color: var(--green); }
+    .hero-copy { max-width: 570px; margin: 0; color: #68766f; font-size: 14px; line-height: 1.9; }
+    .hero-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 27px; color: #66756d; font-size: 11px; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+    .meta-dot { color: var(--gold); font-size: 15px; }
+    .workspace { padding-top: 35px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 18px; }
+    .section-kicker { color: var(--muted); font-size: 10px; letter-spacing: .17em; text-transform: uppercase; }
+    h2 { margin: 7px 0 0; font: 400 27px/1.2 var(--serif); letter-spacing: -.02em; }
+    .result-count { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .search-panel { display: grid; grid-template-columns: minmax(180px,1fr) 190px auto; gap: 10px; padding: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+    .search-wrap { position: relative; }
+    .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #718079; font-size: 17px; pointer-events: none; }
+    .search-input, .journal-select { width: 100%; min-height: 46px; padding: 0 14px; border: 1px solid transparent; border-radius: 5px; outline: none; background: #f1f2ec; color: var(--ink); font-size: 12px; }
+    .search-input { padding-left: 42px; }
+    .search-input:focus, .journal-select:focus { border-color: #75917f; box-shadow: 0 0 0 3px rgba(49,92,74,.1); }
+    .journal-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m2 4 4 4 4-4' fill='none' stroke='%236b796f' stroke-width='1.4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 34px; }
+    .search-button { min-width: 92px; border: 0; border-radius: 5px; background: var(--green); color: white; font-size: 12px; cursor: pointer; transition: background .18s; }
+    .search-button:hover { background: var(--green-dark); }
+    .filter-line { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin: 13px 0 28px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip { padding: 7px 11px; border: 1px solid transparent; border-radius: 99px; background: transparent; color: #718079; font-size: 10px; cursor: pointer; }
+    .chip:hover { border-color: #c8d4ca; }
+    .chip[aria-pressed="true"] { border-color: #cbd8cc; background: var(--green-soft); color: var(--green-dark); }
+    .sort-label { display: flex; align-items: center; gap: 7px; color: #7a867f; font-size: 10px; }
+    .sort-select { border: 0; background: transparent; color: #40584a; font-size: 10px; }
+    .library-grid { display: grid; grid-template-columns: minmax(0,1fr) 250px; gap: clamp(22px,4vw,54px); align-items: start; }
+    .paper-list { display: grid; gap: 12px; }
+    .empty-state { min-height: 292px; display: grid; place-items: center; padding: 30px; border: 1px dashed #cbd4cb; border-radius: 7px; background: rgba(251,250,246,.62); text-align: center; }
+    .empty-inner { max-width: 370px; }
+    .empty-mark { width: 52px; height: 52px; display: grid; place-items: center; margin: 0 auto 17px; border: 1px solid #d4ddd4; border-radius: 50%; color: var(--green); font: 25px var(--serif); }
+    .empty-state h3 { margin: 0 0 8px; font: 400 22px var(--serif); }
+    .empty-state p { margin: 0; color: #77837c; font-size: 12px; line-height: 1.8; }
+    .empty-note { display: inline-block; margin-top: 18px; padding: 8px 11px; border-radius: 4px; background: #edf0e9; color: #4e6757; font-size: 10px; }
+    .paper-card { padding: 21px 23px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+    .paper-meta { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 10px; }
+    .journal-badge { padding: 5px 8px; border-radius: 3px; background: var(--green-soft); color: var(--green); font-weight: 700; letter-spacing: .04em; }
+    .paper-card h3 { margin: 13px 0 7px; font: 400 21px/1.35 var(--serif); }
+    .paper-card .authors { color: #718079; font-size: 11px; }
+    .paper-card .abstract { margin: 13px 0; color: #55645c; font-size: 12px; line-height: 1.8; }
+    .paper-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 13px; border-top: 1px solid #e7e9e2; }
+    .paper-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .paper-tag { padding: 4px 7px; border: 1px solid #e0e4dc; border-radius: 3px; color: #6b786f; font-size: 9px; }
+    .paper-link { color: var(--green); font-size: 11px; text-decoration: none; }
+    .paper-link:hover { text-decoration: underline; }
+    .aside { display: grid; gap: 17px; }
+    .aside-card { padding: 19px 18px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+    .aside-title { margin: 0 0 14px; font: 400 18px var(--serif); }
+    .journal-list { display: grid; }
+    .journal-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid #e9ebe4; }
+    .journal-row:first-child { border-top: 0; padding-top: 0; }
+    .journal-acronym { color: var(--green); font-size: 11px; font-weight: 700; }
+    .journal-name { margin-top: 3px; color: #7a867f; font: 10px/1.4 var(--serif); }
+    .journal-state { align-self: center; color: #9a9f96; font-size: 9px; }
+    .about-card { background: #e9eee7; border-color: #e0e7df; }
+    .about-card p { margin: 0; color: #54665a; font-size: 11px; line-height: 1.8; }
+    .about-card a { display: inline-block; margin-top: 13px; color: var(--green); font-size: 10px; text-decoration: none; }
+    .about-card a:hover { text-decoration: underline; }
+    .footer { display: flex; justify-content: space-between; gap: 15px; margin-top: 55px; padding-top: 17px; border-top: 1px solid var(--line); color: #89938c; font-size: 9px; letter-spacing: .08em; }
+    .footer a { color: #66796d; text-decoration: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 205px minmax(0,1fr); }
+      .sidebar { padding-inline: 16px; }
+      .library-grid { grid-template-columns: minmax(0,1fr) 215px; gap: 20px; }
+    }
+    @media (max-width: 700px) {
+      .shell { display: block; }
+      .sidebar { position: static; height: auto; padding: 14px 20px; }
+      .brand-mark { width: 34px; height: 34px; }
+      .side-label, .side-bottom { display: none; }
+      .side-nav { display: flex; gap: 4px; margin-top: 13px; overflow-x: auto; }
+      .side-nav a { flex: 0 0 auto; padding: 8px 10px; font-size: 11px; }
+      .nav-icon { display: none; }
+      .topbar { height: 45px; padding-inline: 20px; }
+      .topbar-right span:first-child { display: none; }
+      .content { padding-inline: 20px; }
+      .hero { padding-top: 48px; }
+      .hero::after { right: -20px; top: 28px; font-size: 205px; }
+      .hero-copy { font-size: 13px; }
+      .search-panel { grid-template-columns: 1fr 1fr; }
+      .search-wrap { grid-column: 1 / -1; }
+      .search-button { min-height: 43px; }
+      .library-grid { grid-template-columns: 1fr; }
+      .aside { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .aside-card { padding: 15px; }
+      .footer { flex-direction: column; margin-top: 38px; }
+    }
+    @media (max-width: 430px) {
+      .section-head { align-items: start; }
+      .result-count { padding-top: 7px; }
+      .aside { grid-template-columns: 1fr; }
+      .hero-meta { gap: 12px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="公共行政知识库首页">
+        <span class="brand-mark" aria-hidden="true">知</span>
+        <span class="brand-name">公共行政知识库<small>Public Administration Knowledge Bank</small></span>
+      </a>
+      <div class="side-label">Knowledge space</div>
+      <nav class="side-nav">
+        <a href="#library" aria-current="page"><span class="nav-icon">⌕</span>文章检索</a>
+        <a href="#journals"><span class="nav-icon">▤</span>期刊范围</a>
+        <a href="#about"><span class="nav-icon">↗</span>关于知识库</a>
+      </nav>
+      <div class="side-bottom">一个持续生长的公共行政研究书架。<br><a href="https://github.com/pa-knowledge-bank/pa-knowledge-bank.github.io">查看项目 ↗</a></div>
+    </aside>
+
+    <main class="main" id="top">
+      <div class="topbar">
+        <span>研究 · 整理 · 重访</span>
+        <div class="topbar-right"><span>RESEARCH LIBRARY</span><span class="live-mark">公开访问</span></div>
+      </div>
+      <div class="content">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="eyebrow">A living research library</div>
+          <h1 id="hero-title">让好研究，<br><span>更容易被找到。</span></h1>
+          <p class="hero-copy">面向公共行政与政策研究的开放书架。用清晰的线索发现论文、回看研究问题，也把值得借鉴的想法留在手边。</p>
+          <div class="hero-meta">
+            <span><i class="meta-dot" aria-hidden="true">✳</i>公共行政 · 公共管理 · 政策分析</span>
+            <span><i class="meta-dot" aria-hidden="true">✳</i>从论文到可复用的研究线索</span>
+          </div>
+        </section>
+
+        <section class="workspace" id="library" aria-labelledby="library-title">
+          <div class="section-head">
+            <div><div class="section-kicker">Explore the collection</div><h2 id="library-title">文章库 <span style="color:#89948b;font:13px system-ui,sans-serif">/ Papers</span></h2></div>
+            <div class="result-count" id="result-count" aria-live="polite">当前 0 篇文章</div>
+          </div>
+          <form class="search-panel" id="search-form" role="search">
+            <label class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><span class="sr-only">搜索文章</span><input class="search-input" id="search-input" type="search" placeholder="搜索标题、作者、主题或关键词" autocomplete="off"></label>
+            <label><span class="sr-only">选择期刊</span><select class="journal-select" id="journal-select"><option value="">全部期刊</option><option value="PAR">Public Administration Review</option><option value="JPART">Journal of Public Administration Research and Theory</option><option value="PA">Public Administration</option><option value="JPAM">Journal of Policy Analysis and Management</option></select></label>
+            <button class="search-button" type="submit">搜索文章 <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="filter-line">
+            <div class="chips" role="group" aria-label="按研究主题筛选">
+              <button class="chip" type="button" data-topic="" aria-pressed="true">全部主题</button>
+              <button class="chip" type="button" data-topic="治理" aria-pressed="false">治理</button>
+              <button class="chip" type="button" data-topic="组织" aria-pressed="false">公共组织</button>
+              <button class="chip" type="button" data-topic="政策" aria-pressed="false">政策分析</button>
+              <button class="chip" type="button" data-topic="方法" aria-pressed="false">研究方法</button>
+            </div>
+            <label class="sort-label">排序
+              <select class="sort-select" id="sort-select" aria-label="排序方式"><option value="newest">最新收录</option><option value="oldest">最早发表</option><option value="title">标题 A–Z</option></select>
+            </label>
+          </div>
+
+          <div class="library-grid">
+            <div class="paper-list" id="paper-list" aria-live="polite"></div>
+            <aside class="aside">
+              <section class="aside-card" id="journals" aria-labelledby="journal-heading">
+                <h3 class="aside-title" id="journal-heading">关注期刊</h3>
+                <div class="journal-list">
+                  <div class="journal-row"><div><div class="journal-acronym">PAR</div><div class="journal-name">Public Administration Review</div></div><span class="journal-state">期刊范围</span></div>
+                  <div class="journal-row"><div><div class="journal-acronym">JPART</div><div class="journal-name">Journal of Public Administration Research and Theory</div></div><span class="journal-state">期刊范围</span></div>
+                  <div class="journal-row"><div><div class="journal-acronym">PA</div><div class="journal-name">Public Administration</div></div><span class="journal-state">期刊范围</span></div>
+                  <div class="journal-row"><div><div class="journal-acronym">JPAM</div><div class="journal-name">Journal of Policy Analysis and Management</div></div><span class="journal-state">期刊范围</span></div>
+                </div>
+              </section>
+              <section class="aside-card about-card" id="about">
+                <h3 class="aside-title">让知识持续生长</h3>
+                <p>这里收录可检索的论文线索，并逐步补充研究问题、核心发现与全文入口。当前文章集尚未接入，页面不会展示虚构条目。</p>
+                <a href="https://github.com/pa-knowledge-bank/pa-knowledge-bank.github.io">了解项目与收录方式 ↗</a>
+              </section>
+            </aside>
+          </div>
+        </section>
+        <footer class="footer"><span>PUBLIC ADMINISTRATION KNOWLEDGE BANK</span><a href="https://github.com/pa-knowledge-bank/pa-knowledge-bank.github.io">开放的研究书架 · GitHub ↗</a></footer>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Keep this array as the single source for published papers. Only verified records belong here.
+    // Fields: title, authors, journal, year, dateAdded (YYYY-MM-DD), abstract, topics, url.
+    const papers = [];
+    const journalNames = {
+      PAR: "Public Administration Review",
+      JPART: "Journal of Public Administration Research and Theory",
+      PA: "Public Administration",
+      JPAM: "Journal of Policy Analysis and Management"
+    };
+    const list = document.getElementById("paper-list");
+    const searchInput = document.getElementById("search-input");
+    const journalSelect = document.getElementById("journal-select");
+    const sortSelect = document.getElementById("sort-select");
+    const count = document.getElementById("result-count");
+    let activeTopic = "";
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    }
+    function filteredPapers() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      return papers.filter(paper => {
+        const searchable = [paper.title, paper.authors, paper.journal, paper.abstract, ...(paper.topics || [])].join(" ").toLocaleLowerCase();
+        const journalMatch = !journalSelect.value || paper.journal === journalSelect.value;
+        const topicMatch = !activeTopic || (paper.topics || []).includes(activeTopic);
+        return (!query || searchable.includes(query)) && journalMatch && topicMatch;
+      }).sort((a, b) => {
+        if (sortSelect.value === "title") return a.title.localeCompare(b.title, "zh-CN");
+        if (sortSelect.value === "oldest") return Number(a.year) - Number(b.year);
+        return String(b.dateAdded || b.year).localeCompare(String(a.dateAdded || a.year));
+      });
+    }
+    function render() {
+      const results = filteredPapers();
+      count.textContent = `当前 ${results.length} 篇文章`;
+      if (!results.length) {
+        const filtered = searchInput.value.trim() || journalSelect.value || activeTopic;
+        list.innerHTML = `<div class="empty-state"><div class="empty-inner"><div class="empty-mark" aria-hidden="true">知</div><h3>${filtered ? "没有找到匹配的文章" : "书架正在等待第一篇文章"}</h3><p>${filtered ? "试试更短的关键词，或调整期刊与主题筛选。" : "文章集接入后，论文信息与可用全文入口会显示在这里。"}</p>${filtered ? "" : '<span class="empty-note">目前没有已收录条目</span>'}</div></div>`;
+        return;
+      }
+      list.innerHTML = results.map(paper => `<article class="paper-card">
+        <div class="paper-meta"><span class="journal-badge">${escapeHTML(paper.journal)}</span><span>${escapeHTML(journalNames[paper.journal] || paper.journalName || "")}</span><span>·</span><span>${escapeHTML(paper.year)}</span></div>
+        <h3>${escapeHTML(paper.title)}</h3><div class="authors">${escapeHTML(paper.authors)}</div>
+        ${paper.abstract ? `<p class="abstract">${escapeHTML(paper.abstract)}</p>` : ""}
+        <div class="paper-footer"><div class="paper-tags">${(paper.topics || []).map(topic => `<span class="paper-tag">${escapeHTML(topic)}</span>`).join("")}</div>
+        ${paper.url ? `<a class="paper-link" href="${escapeHTML(paper.url)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a>` : ""}</div>
+      </article>`).join("");
+    }
+    document.getElementById("search-form").addEventListener("submit", event => { event.preventDefault(); render(); });
+    searchInput.addEventListener("input", render);
+    journalSelect.addEventListener("change", render);
+    sortSelect.addEventListener("change", render);
+    document.querySelectorAll("[data-topic]").forEach(button => button.addEventListener("click", () => {
+      activeTopic = button.dataset.topic;
+      document.querySelectorAll("[data-topic]").forEach(chip => chip.setAttribute("aria-pressed", String(chip === button)));
+      render();
+    }));
+    render();
+  </script>
+</body>
+</html>
