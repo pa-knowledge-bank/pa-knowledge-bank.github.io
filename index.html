@@ -43,6 +43,10 @@
     .side-nav a { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 6px; color: #ced8d0; font-size: 13px; text-decoration: none; transition: background .18s,color .18s; }
     .side-nav a:hover, .side-nav a[aria-current="page"] { background: #315346; color: #fffefa; }
     .nav-icon { width: 18px; text-align: center; color: #d8bd92; font-size: 15px; }
+    .side-nav-sep { padding: 16px 12px 5px; color: #99afa1; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+    .nav-badge { margin-left: auto; min-width: 20px; padding: 1px 7px; border-radius: 99px; background: #315346; color: #e7c99b; font-size: 10px; line-height: 1.5; text-align: center; }
+    .side-nav a.is-empty { color: #7f9187; }
+    .side-nav a.is-empty .nav-badge { background: #2c4a3e; color: #8fa398; }
     .side-bottom { margin-top: auto; border-top: 1px solid #496456; padding: 18px 10px 0; color: #b9c7be; font-size: 11px; line-height: 1.7; }
     .side-bottom a { color: #e7c99b; text-decoration: none; }
     .main { min-width: 0; }
@@ -128,9 +132,11 @@
       .sidebar { position: static; height: auto; padding: 14px 20px; }
       .brand-mark { width: 34px; height: 34px; }
       .side-label, .side-bottom { display: none; }
-      .side-nav { display: flex; gap: 4px; margin-top: 13px; overflow-x: auto; }
-      .side-nav a { flex: 0 0 auto; padding: 8px 10px; font-size: 11px; }
+      .side-nav { display: flex; flex-wrap: wrap; gap: 5px 6px; margin-top: 13px; overflow-x: visible; }
+      .side-nav a { flex: 0 0 auto; padding: 7px 9px; font-size: 11px; }
       .nav-icon { display: none; }
+      .side-nav-sep { flex: 0 0 100%; padding: 10px 2px 1px; }
+      .nav-badge { margin-left: 5px; min-width: 17px; padding: 0 5px; }
       .topbar { height: 45px; padding-inline: 20px; }
       .topbar-right span:first-child { display: none; }
       .content { padding-inline: 20px; }
@@ -223,14 +229,18 @@
       <div class="side-label">Knowledge space</div>
       <nav class="side-nav">
         <a href="#library" aria-current="page"><span class="nav-icon">⌕</span>文章检索</a>
-        <a href="#daily-digest"><span class="nav-icon">◷</span>每日快报</a>
-        <a href="#daily-digest-2026-11-08"><span class="nav-icon">◷</span>11月8日补录</a>
-        <a href="#daily-digest-2026-11-06"><span class="nav-icon">◷</span>11月6日快报</a>
-        <a href="#daily-digest-2026-11-05"><span class="nav-icon">◷</span>11月5日快报</a>
-        <a href="#daily-digest-2026-11-04"><span class="nav-icon">◷</span>11月4日快报</a>
-        <a href="#daily-digest-2026-11-03"><span class="nav-icon">◷</span>11月3日快报</a>
-        <a href="#daily-digest-2026-11-02"><span class="nav-icon">↻</span>11月2日补录</a>
-        <a href="#weekly-digest-2026-11-01"><span class="nav-icon">▦</span>七日摘要</a>
+        <div class="side-nav-sep">Journals</div>
+        <a href="#library" data-journal="PAR"><span class="nav-icon">▪</span>PAR<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="JPART"><span class="nav-icon">▪</span>JPART<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="PA"><span class="nav-icon">▪</span>PA<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="JPAM"><span class="nav-icon">▪</span>JPAM<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="GOV"><span class="nav-icon">▪</span>GOV<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="PSJ"><span class="nav-icon">▪</span>PSJ<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="PMR"><span class="nav-icon">▪</span>PMR<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="PPMG"><span class="nav-icon">▪</span>PPMG<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="R&amp;G"><span class="nav-icon">▪</span>R&amp;G<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="PPMR"><span class="nav-icon">▪</span>PPMR<span class="nav-badge"></span></a>
+        <a href="#library" data-journal="AER"><span class="nav-icon">▪</span>AER<span class="nav-badge"></span></a>
         <a href="#journals"><span class="nav-icon">▤</span>期刊范围</a>
         <a href="#about"><span class="nav-icon">↗</span>关于知识库</a>
       </nav>
@@ -706,9 +716,42 @@
         ${paper.url ? `<a class="paper-link" href="${escapeHTML(paper.url)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a>` : ""}</div>
       </article>`).join("");
     }
+    // --- 期刊 tab：数量角标、置灰、点击即筛选 ---
+    const navJournalLinks = document.querySelectorAll(".side-nav a[data-journal]");
+    function syncJournalNav() {
+      const active = journalSelect.value;
+      navJournalLinks.forEach(link => {
+        if (link.dataset.journal === active) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
+      const allLink = document.querySelector('.side-nav a[href="#library"]:not([data-journal])');
+      if (allLink) {
+        if (active) allLink.removeAttribute("aria-current");
+        else allLink.setAttribute("aria-current", "page");
+      }
+    }
+    navJournalLinks.forEach(link => {
+      const key = link.dataset.journal;
+      const n = papers.filter(p => p.journal === key).length;
+      const badge = link.querySelector(".nav-badge");
+      if (badge) badge.textContent = String(n);
+      if (n === 0) link.classList.add("is-empty");
+      link.addEventListener("click", () => {
+        journalSelect.value = key;
+        render();
+        syncJournalNav();
+      });
+    });
+    const allLibraryLink = document.querySelector('.side-nav a[href="#library"]:not([data-journal])');
+    if (allLibraryLink) allLibraryLink.addEventListener("click", () => {
+      journalSelect.value = "";
+      render();
+      syncJournalNav();
+    });
+    syncJournalNav();
     document.getElementById("search-form").addEventListener("submit", event => { event.preventDefault(); render(); });
     searchInput.addEventListener("input", render);
-    journalSelect.addEventListener("change", render);
+    journalSelect.addEventListener("change", () => { render(); syncJournalNav(); });
     sortSelect.addEventListener("change", render);
     document.querySelectorAll("[data-topic]").forEach(button => button.addEventListener("click", () => {
       activeTopic = button.dataset.topic;
