@@ -120,6 +120,8 @@
       .shell { grid-template-columns: 205px minmax(0,1fr); }
       .sidebar { padding-inline: 16px; }
       .library-grid { grid-template-columns: minmax(0,1fr) 215px; gap: 20px; }
+      .search-panel { grid-template-columns: minmax(0,1fr) minmax(0,170px); }
+      .search-button { grid-column: 1 / -1; min-height: 43px; }
     }
     @media (max-width: 700px) {
       .shell { display: block; }
@@ -144,12 +146,71 @@
       .footer { flex-direction: column; margin-top: 38px; }
     }
     @media (max-width: 430px) {
-      .section-head { align-items: start; }
-      .result-count { padding-top: 7px; }
+      .section-head { align-items: start; flex-wrap: wrap; gap: 6px 18px; }
+      .result-count { padding-top: 7px; white-space: normal; }
       .aside { grid-template-columns: 1fr; }
       .hero-meta { gap: 12px 18px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; } }
+
+    /* ===== 快报：原生折叠行（方向 B）===== */
+    .dw { display: grid; gap: 9px; margin: 16px 0; }
+    .dr { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .dr[open] { border-color: #c6d4c9; box-shadow: 0 2px 10px rgba(32,61,51,.06); }
+    .dr > summary { display: flex; gap: 14px; align-items: flex-start; padding: 15px 18px; cursor: pointer; list-style: none; }
+    .dr > summary::-webkit-details-marker { display: none; }
+    .dr > summary::marker { content: ""; }
+    .dr > summary:hover { background: #f4f5ef; }
+    .dr-main { flex: 1; min-width: 0; }
+    .dr-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+    .dr-j { padding: 4px 9px; border-radius: 3px; background: var(--green-soft); color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .05em; }
+    .dr-flag { padding: 3px 7px; border: 1px solid #e6d5bd; background: #faf3e8; color: #96703f; font-size: 10px; border-radius: 3px; }
+    .dr-type { color: var(--muted); font-size: 11px; }
+    .dr-title { font: 400 clamp(16px,2.2vw,19px)/1.4 var(--serif); overflow-wrap: anywhere; }
+    .dr-title a { text-decoration: none; }
+    .dr-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .dr-auth { margin-top: 5px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .dr-q { margin-top: 7px; color: #5b6a62; font-size: 12.5px; line-height: 1.75; overflow-wrap: anywhere; }
+    .dr-ql { display: inline-block; margin-right: 7px; padding: 1px 6px; border-radius: 3px; background: #eef1ea; color: var(--green); font-size: 10px; font-weight: 700; }
+    .dr-chev { flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--green); font-size: 15px; line-height: 1; transition: transform .2s, background .2s; }
+    .dr[open] > summary .dr-chev { transform: rotate(45deg); background: var(--green); color: #fff; border-color: var(--green); }
+    .dr-body { padding: 4px 18px 18px; border-top: 1px solid #eceee7; }
+    .dr-field { display: grid; grid-template-columns: 104px minmax(0,1fr); gap: 14px; padding: 13px 0; border-top: 1px solid #e9ebe4; }
+    .dr-body > .dr-field:first-child { border-top: none; padding-top: 14px; }
+    .dr-fl { color: var(--green); font-size: 11px; font-weight: 700; padding-top: 3px; letter-spacing: .04em; }
+    .dr-field > div { font-size: 13.5px; line-height: 1.9; color: #3f4d46; overflow-wrap: anywhere; min-width: 0; }
+    .dr-field a { color: var(--green); }
+    .dr-why { background: #f6f3ea; border-radius: 7px; border-top: none; padding: 14px 15px; margin-top: 7px; }
+    .dr-src > div { color: var(--muted); font-size: 12px; line-height: 1.85; }
+
+    /* ===== 快报：状态表（3列，窄屏堆叠）===== */
+    .st-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); margin: 16px 0; }
+    .st { width: 100%; border-collapse: collapse; font-size: 12.5px; line-height: 1.75; }
+    .st th { padding: 11px 14px; text-align: left; color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #f7f8f3; }
+    .st td { padding: 11px 14px; border-top: 1px solid #eceee7; vertical-align: top; color: #3f4d46; overflow-wrap: anywhere; }
+    .st tbody tr:first-child td { border-top: 0; }
+    .st tbody tr:hover { background: #fafbf7; }
+    .st td a { color: var(--green); }
+
+    .source-note { margin: 12px 0 0; color: #718079; font-size: 11px; line-height: 1.8; }
+    .source-note a { color: var(--green); }
+
+    @media (max-width: 700px) {
+      .dr > summary { padding: 14px 15px; }
+      .dr-body { padding: 4px 15px 16px; }
+      .dr-field { grid-template-columns: 1fr; gap: 4px; }
+      .dr-fl { padding-top: 0; }
+      .dr-chev { width: 22px; height: 22px; }
+      .st-wrap { overflow: visible; background: transparent; border: none; }
+      .st, .st tbody, .st tr, .st td { display: block; width: 100%; }
+      .st thead { display: none; }
+      .st tr { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; padding: 13px 15px; }
+      .st tbody tr:hover { background: var(--surface); }
+      .st td { padding: 8px 0; border-top: 1px solid #eceee7; }
+      .st tr td:first-child { border-top: 0; padding-top: 0; color: var(--green); font-weight: 700; }
+      .st td::before { content: attr(data-label); display: block; margin-bottom: 3px; color: var(--green); font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+      .st tr td:first-child::before { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -194,84 +255,140 @@
 <section id="daily-digest-2026-11-06" aria-labelledby="daily-digest-2026-11-06-title" style="padding:30px 0;border-bottom:1px solid var(--line)">
 <div class="section-head"><div><div class="section-kicker">Journal update · 2026-11-06</div><h2 id="daily-digest-2026-11-06-title">每日期刊快报</h2></div><div class="result-count">检索区间：2026-11-05 — 2026-11-06</div></div>
 <p>本轮按扩展后的 12 本期刊检索。严格时间窗内没有确认到 11 月 5—6 日新上线的研究论文。检索时发现一篇 JPART 11 月 3 日上线论文未进入前期归档，现补录。另因 PMR、AER 是上一期摘要后才加入监测，首次扩展检索补录其 11 月 1—2 日近期相关文章；这些补录不属于严格时间窗内的新发表。</p>
-<div class="table-wrap"><table><thead><tr><th>期刊</th><th>文章</th><th>类型</th><th>研究问题</th><th>摘要发现</th><th>为什么重要（白话）</th><th>全文阅读</th></tr></thead><tbody>
-<tr><td>JPART<br>前期漏检补录</td><td><a href="https://doi.org/10.1093/jopart/muag037">Toward an “Identity Turn” in Public Service Motivation Theory: A Problematizing Review and Research Agenda</a><br>2026-11-03</td><td>概念性综述与研究议程；期刊列为 Research Article</td><td>公共服务动机是否应只被理解为一种“动机”，还是也可以理解为一种社会身份？</td><td>作者比较公共管理、管理学、心理学、社会学和经济学中的相关概念，提出把公共服务动机重新理解为社会身份，并据此更新概念、测量方式和研究议程。</td><td>如果研究者对“公共服务动机是什么”理解不同，量表和实证结果就难以对话。身份视角提供了重新组织讨论的办法。</td><td>开放获取。期刊页标示 CC BY，但 PDF 请求返回 403；本条仅按摘要总结，非全文阅读。</td></tr>
-<tr><td>PMR<br>新增期刊近期补录</td><td><a href="https://doi.org/10.1080/14719037.2026.2752047">The virtue paradox: how perceived organizational social responsibility and organizational shame fuel resistance to change among motivated public servants</a><br>2026-11-02</td><td>研究论文</td><td>当公共组织未兑现其社会责任承诺时，员工的羞耻感和公共服务动机会怎样影响改革阻力？</td><td>对 113 名法国地方政府员工进行三波调查。员工越觉得组织没有兑现责任承诺，越可能感到羞耻，继而抵制变革；这一关联在公共服务动机较强者中更明显。</td><td>热心的公务员也可能因组织言行不一而更抗拒改革。管理者需要兑现承诺，并说明改革如何符合组织价值。</td><td>非开放获取；依据摘要。</td></tr>
-<tr><td>PMR<br>新增期刊近期补录</td><td><a href="https://doi.org/10.1080/14719037.2026.2752994">Towards more impactful co-design: insights from a systematic review of food loss and waste solutions</a><br>2026-11-02</td><td>系统综述（Research Article；开放获取）</td><td>公共政策中的共同设计实际如何开展，又产出了什么解决方案？</td><td>审阅 38 项减少食物损失与浪费的研究。共同设计标签用法不一，创意参与方法较少；产出多停留在想法或原型，很多研究没有说明方案如何带来预期改变。</td><td>邀请公众一起设计政策并不自动带来有效方案。政策团队还要说明方案如何实施、通过什么机制产生结果。</td><td>全文阅读（Full-text based）：依据 PRISMA 指引系统检索 38 项研究，结合人工编码与 AI 辅助分析；提出共同设计编码框架，并用 CIMO（情境—干预—机制—结果）帮助事前写清变革逻辑。</td></tr>
-<tr><td>PMR<br>新增期刊近期补录</td><td><a href="https://doi.org/10.1080/14719037.2026.2756938">Organizational sensemaking and AI adoption in U.S. local governments</a><br>2026-11-02</td><td>研究论文</td><td>美国地方政府采用 AI，主要取决于组织障碍，还是取决于组织如何理解 AI 的机会并采取行动？</td><td>使用 2024 年 ICMA AI 调查。内部障碍与 AI 采用没有显著关联；对 AI 潜力的判断和组织主动行动则与采用正相关。</td><td>地方政府采用 AI 不只是“有没有资源”的问题；管理者如何理解技术、是否主动组织行动也很关键。</td><td>非开放获取；依据摘要。</td></tr>
-<tr><td>PMR<br>新增期刊近期补录</td><td><a href="https://doi.org/10.1080/14719037.2026.2756935">Resolving institutional fragmentation in a multilevel governance system: configurational logics of social health insurance integration in China</a><br>2026-11-01</td><td>研究论文</td><td>中国城市如何整合分散的社会医疗保险制度？不同条件能否通过不同组合促成整合？</td><td>以 251 个城市为案例开展模糊集 QCA，识别出四种通向整合的条件组合。行政层级、协调能力、经济实力和财政条件以不同方式共同发挥作用。</td><td>制度整合可能有多条可行路径。不同城市不一定要照搬同一方案，而应结合自身能力与激励条件。</td><td>非开放获取；依据摘要。</td></tr>
-<tr><td>AER<br>新增期刊近期补录</td><td><a href="https://doi.org/10.1257/aer.20231684">The Returns to Government R&amp;D: Evidence from US Appropriations Shocks</a><br>2026 年 11 月期</td><td>研究论文</td><td>增加联邦非国防研发拨款，是否会推动创新和长期生产率？回报有多大？</td><td>作者整理五个主要联邦机构战后研发拨款的重大变化，估计非国防政府研发资本的回报率约为 140%—210%；政府研发约占二战后商业部门全要素生产率增长的五分之一。</td><td>政府研发预算不只是支出，也可能带来长期生产率收益。研究为讨论公共研发投入是否不足提供量化依据。</td><td>非开放获取；依据摘要。AER 2026 年 11 月期，作为新纳入期刊的近期补录。</td></tr>
-</tbody></table></div>
+<div class="dw"><details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">JPART</span><span class="dr-flag">前期漏检补录</span><span class="dr-type">概念性综述与研究议程；期刊列为 Research Article</span><span class="dr-type">2026-11-03</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1093/jopart/muag037" target="_blank" rel="noopener">Toward an “Identity Turn” in Public Service Motivation Theory: A Problematizing Review and Research Agenda</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>公共服务动机是否应只被理解为一种“动机”，还是也可以理解为一种社会身份？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要发现</span><div>作者比较公共管理、管理学、心理学、社会学和经济学中的相关概念，提出把公共服务动机重新理解为社会身份，并据此更新概念、测量方式和研究议程。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>如果研究者对“公共服务动机是什么”理解不同，量表和实证结果就难以对话。身份视角提供了重新组织讨论的办法。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>开放获取。期刊页标示 CC BY，但 PDF 请求返回 403；本条仅按摘要总结，非全文阅读。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">PMR</span><span class="dr-flag">新增期刊近期补录</span><span class="dr-type">研究论文</span><span class="dr-type">2026-11-02</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1080/14719037.2026.2752047" target="_blank" rel="noopener">The virtue paradox: how perceived organizational social responsibility and organizational shame fuel resistance to change among motivated public servants</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>当公共组织未兑现其社会责任承诺时，员工的羞耻感和公共服务动机会怎样影响改革阻力？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要发现</span><div>对 113 名法国地方政府员工进行三波调查。员工越觉得组织没有兑现责任承诺，越可能感到羞耻，继而抵制变革；这一关联在公共服务动机较强者中更明显。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>热心的公务员也可能因组织言行不一而更抗拒改革。管理者需要兑现承诺，并说明改革如何符合组织价值。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>非开放获取；依据摘要。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">PMR</span><span class="dr-flag">新增期刊近期补录</span><span class="dr-type">系统综述（Research Article；开放获取）</span><span class="dr-type">2026-11-02</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1080/14719037.2026.2752994" target="_blank" rel="noopener">Towards more impactful co-design: insights from a systematic review of food loss and waste solutions</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>公共政策中的共同设计实际如何开展，又产出了什么解决方案？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要发现</span><div>审阅 38 项减少食物损失与浪费的研究。共同设计标签用法不一，创意参与方法较少；产出多停留在想法或原型，很多研究没有说明方案如何带来预期改变。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>邀请公众一起设计政策并不自动带来有效方案。政策团队还要说明方案如何实施、通过什么机制产生结果。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>全文阅读（Full-text based）：依据 PRISMA 指引系统检索 38 项研究，结合人工编码与 AI 辅助分析；提出共同设计编码框架，并用 CIMO（情境—干预—机制—结果）帮助事前写清变革逻辑。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">PMR</span><span class="dr-flag">新增期刊近期补录</span><span class="dr-type">研究论文</span><span class="dr-type">2026-11-02</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1080/14719037.2026.2756938" target="_blank" rel="noopener">Organizational sensemaking and AI adoption in U.S. local governments</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>美国地方政府采用 AI，主要取决于组织障碍，还是取决于组织如何理解 AI 的机会并采取行动？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要发现</span><div>使用 2024 年 ICMA AI 调查。内部障碍与 AI 采用没有显著关联；对 AI 潜力的判断和组织主动行动则与采用正相关。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>地方政府采用 AI 不只是“有没有资源”的问题；管理者如何理解技术、是否主动组织行动也很关键。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>非开放获取；依据摘要。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">PMR</span><span class="dr-flag">新增期刊近期补录</span><span class="dr-type">研究论文</span><span class="dr-type">2026-11-01</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1080/14719037.2026.2756935" target="_blank" rel="noopener">Resolving institutional fragmentation in a multilevel governance system: configurational logics of social health insurance integration in China</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>中国城市如何整合分散的社会医疗保险制度？不同条件能否通过不同组合促成整合？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要发现</span><div>以 251 个城市为案例开展模糊集 QCA，识别出四种通向整合的条件组合。行政层级、协调能力、经济实力和财政条件以不同方式共同发挥作用。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>制度整合可能有多条可行路径。不同城市不一定要照搬同一方案，而应结合自身能力与激励条件。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>非开放获取；依据摘要。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">AER</span><span class="dr-flag">新增期刊近期补录</span><span class="dr-type">研究论文</span><span class="dr-type">2026 年 11 月期</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1257/aer.20231684" target="_blank" rel="noopener">The Returns to Government R&amp;D: Evidence from US Appropriations Shocks</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>增加联邦非国防研发拨款，是否会推动创新和长期生产率？回报有多大？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要发现</span><div>作者整理五个主要联邦机构战后研发拨款的重大变化，估计非国防政府研发资本的回报率约为 140%—210%；政府研发约占二战后商业部门全要素生产率增长的五分之一。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>政府研发预算不只是支出，也可能带来长期生产率收益。研究为讨论公共研发投入是否不足提供量化依据。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>非开放获取；依据摘要。AER 2026 年 11 月期，作为新纳入期刊的近期补录。</div></div>
+</div></details></div>
 <p class="source-note">监测范围：PAR、JPART、PA、JPAM、Governance、PMR、GIQ、OS、SSCR、AJS、APSR、AER。官方元数据：<a href="https://academic.oup.com/JPART/advance-articles">JPART Advance Articles</a>、<a href="https://www.tandfonline.com/toc/rpxm20/0/0">PMR Latest Articles</a>、<a href="https://www.aeaweb.org/issues/867">AER Vol. 116, No. 11</a>。本期没有其他严格落在 11 月 5—6 日的新研究论文。</p>
 
 <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--line)">
 <div class="section-head"><div><div class="section-kicker">Follow-up check · 2026-11-06</div><h3 style="margin:7px 0 0;font:400 21px/1.3 var(--serif)">后续检查：无新增合格论文</h3></div><div class="result-count">检索区间：2026-11-06 00:15 — 08:05（Asia/Shanghai）</div></div>
 <p>自本页当天首轮快报发布后，复核 12 本期刊的官方最新文章页面及出版商记录。该时间窗内未发现新上线或新可获取的合格研究论文。以下为本轮核对的官方入口。</p>
-<div class="table-wrap"><table><thead><tr><th>期刊</th><th>官方最新文章 / 出版商页面</th><th>本轮结果</th></tr></thead><tbody>
-<tr><td>PAR</td><td><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td><td>无新增</td></tr>
-<tr><td>JPART</td><td><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td><td>无新增</td></tr>
-<tr><td>PA</td><td><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td><td>无新增</td></tr>
-<tr><td>JPAM</td><td><a href="https://onlinelibrary.wiley.com/toc/15206688/0/0">最新文章</a></td><td>无新增</td></tr>
-<tr><td>Governance</td><td><a href="https://onlinelibrary.wiley.com/journal/14680491">Wiley 期刊文章页</a></td><td>无新增</td></tr>
-<tr><td>PMR</td><td><a href="https://www.tandfonline.com/journals/rpxm20">Latest Articles</a></td><td>无新增</td></tr>
-<tr><td>GIQ</td><td><a href="https://www.sciencedirect.com/journal/government-information-quarterly/articles-in-press">Articles in Press</a></td><td>无新增</td></tr>
-<tr><td>OS</td><td><a href="https://journals.sagepub.com/home/OSS">OnlineFirst</a></td><td>无新增</td></tr>
-<tr><td>SSCR</td><td><a href="https://journals.sagepub.com/toc/SSC/0/0">OnlineFirst</a></td><td>无新增</td></tr>
-<tr><td>AJS</td><td><a href="https://www.journals.uchicago.edu/toc/ajs/current">Current Issue</a></td><td>无新增</td></tr>
-<tr><td>APSR</td><td><a href="https://www.cambridge.org/core/journals/american-political-science-review/firstview">FirstView</a></td><td>无新增</td></tr>
-<tr><td>AER</td><td><a href="https://www.aeaweb.org/issues/867">Vol. 116, No. 11</a></td><td>无新增</td></tr>
-</tbody></table></div>
+<div class="st-wrap"><table class="st"><thead><tr><th>期刊</th><th>官方最新文章 / 出版商页面</th><th>本轮结果</th></tr></thead><tbody><tr><td data-label="期刊">PAR</td><td data-label="官方最新文章 / 出版商页面"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">JPART</td><td data-label="官方最新文章 / 出版商页面"><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">PA</td><td data-label="官方最新文章 / 出版商页面"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">JPAM</td><td data-label="官方最新文章 / 出版商页面"><a href="https://onlinelibrary.wiley.com/toc/15206688/0/0">最新文章</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">Governance</td><td data-label="官方最新文章 / 出版商页面"><a href="https://onlinelibrary.wiley.com/journal/14680491">Wiley 期刊文章页</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">PMR</td><td data-label="官方最新文章 / 出版商页面"><a href="https://www.tandfonline.com/journals/rpxm20">Latest Articles</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">GIQ</td><td data-label="官方最新文章 / 出版商页面"><a href="https://www.sciencedirect.com/journal/government-information-quarterly/articles-in-press">Articles in Press</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">OS</td><td data-label="官方最新文章 / 出版商页面"><a href="https://journals.sagepub.com/home/OSS">OnlineFirst</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">SSCR</td><td data-label="官方最新文章 / 出版商页面"><a href="https://journals.sagepub.com/toc/SSC/0/0">OnlineFirst</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">AJS</td><td data-label="官方最新文章 / 出版商页面"><a href="https://www.journals.uchicago.edu/toc/ajs/current">Current Issue</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">APSR</td><td data-label="官方最新文章 / 出版商页面"><a href="https://www.cambridge.org/core/journals/american-political-science-review/firstview">FirstView</a></td><td data-label="本轮结果">无新增</td></tr><tr><td data-label="期刊">AER</td><td data-label="官方最新文章 / 出版商页面"><a href="https://www.aeaweb.org/issues/867">Vol. 116, No. 11</a></td><td data-label="本轮结果">无新增</td></tr></tbody></table></div>
 </div>
 </section>
 
 <section id="daily-digest-2026-11-05" aria-labelledby="daily-digest-2026-11-05-title" style="padding:30px 0;border-bottom:1px solid var(--line)">
           <div class="section-head"><div><div class="section-kicker">Journal update · 2026-11-05</div><h2 id="daily-digest-2026-11-05-title">每日期刊快报</h2></div><div class="result-count">检索区间：2026-11-04 — 2026-11-05</div></div>
           <p>本期未发现自 11 月 4 日快报以来新上线或新可获取的合格研究论文。JPART 11 月 2 日上线的论文已收录于前一期；其他期刊官网在本次检索区间内未显示新研究论文。</p>
-          <div class="table-wrap"><table><thead><tr><th>期刊</th><th>本期结果</th><th>官方页面</th></tr></thead><tbody>
-          <tr><td>PAR</td><td>无新增；最近已核对的研究论文为 10 月 28 日，已收录。</td><td><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td></tr>
-          <tr><td>JPART</td><td>无新增；11 月 2 日研究论文已收录于 11 月 4 日快报。</td><td><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td></tr>
-          <tr><td>PA</td><td>无新增；官网近期可见研究论文均早于本次检索区间。</td><td><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td></tr>
-          <tr><td>JPAM</td><td>无新增；近期 10 月文章已在前期快报中核对并收录。</td><td><a href="https://onlinelibrary.wiley.com/journal/15206688">期刊文章列表</a></td></tr>
-          </tbody></table></div>
+          <div class="st-wrap"><table class="st"><thead><tr><th>期刊</th><th>本期结果</th><th>官方页面</th></tr></thead><tbody><tr><td data-label="期刊">PAR</td><td data-label="本期结果">无新增；最近已核对的研究论文为 10 月 28 日，已收录。</td><td data-label="官方页面"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td></tr><tr><td data-label="期刊">JPART</td><td data-label="本期结果">无新增；11 月 2 日研究论文已收录于 11 月 4 日快报。</td><td data-label="官方页面"><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td></tr><tr><td data-label="期刊">PA</td><td data-label="本期结果">无新增；官网近期可见研究论文均早于本次检索区间。</td><td data-label="官方页面"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td></tr><tr><td data-label="期刊">JPAM</td><td data-label="本期结果">无新增；近期 10 月文章已在前期快报中核对并收录。</td><td data-label="官方页面"><a href="https://onlinelibrary.wiley.com/journal/15206688">期刊文章列表</a></td></tr></tbody></table></div>
           <p class="source-note">本期无符合条件的新论文，也无需要进行全文总结的开放获取论文。</p>
         </section>
 
 <section id="daily-digest-2026-11-04" aria-labelledby="daily-digest-2026-11-04-title" style="padding:30px 0;border-bottom:1px solid var(--line)">
           <div class="section-head"><div><div class="section-kicker">Journal update · 2026-11-04</div><h2 id="daily-digest-2026-11-04-title">每日期刊快报</h2></div><div class="result-count">检索区间：2026-11-03 — 2026-11-04</div></div>
           <p>本次发现 1 篇新研究论文，来自 JPART。PAR、PA 与 JPAM 在检索区间内未见新的合格研究论文。JPART 更正公告不计入研究论文。</p>
-          <div class="table-wrap"><table><thead><tr><th>期刊</th><th>标题</th><th>类型</th><th>研究问题</th><th>摘要结果</th><th>为什么重要（白话）</th><th>全文阅读</th></tr></thead><tbody>
-          <tr><td>JPART</td><td><a href="https://doi.org/10.1093/jopart/muag040">The Effect of Clients’ Financial Resources, Mental Health, and Motivation on Frontline Workers’ Burden Reduction and Prioritizations</a></td><td>研究论文（Accepted Manuscript；2026-11-02 在线发表）</td><td>个案工作者会不会根据求助者的经济状况、心理健康和积极程度，调整其需要承担的手续负担和服务优先级？</td><td>对 39 家丹麦失业服务机构的 775 名个案工作者进行预注册情境实验。工作人员更愿意为有心理健康问题、积极性较高的求助者减负并优先处理；经济困难也有一定影响。心理健康影响最大。心理健康问题与低积极性同时出现时，求助者反而得到更多支持，可能因为低积极性被看作病情造成的困难信号。</td><td>办事人员的裁量会影响谁更快得到帮助。结果提示服务规则和工作人员培训应识别“低积极性可能源于健康问题”，以免把需要误当成不配合。</td><td>非开放获取。未读全文；以上依据期刊摘要。</td></tr>
-          </tbody></table></div>
+          <div class="dw"><details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">JPART</span><span class="dr-type">研究论文（Accepted Manuscript；2026-11-02 在线发表）</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1093/jopart/muag040" target="_blank" rel="noopener">The Effect of Clients’ Financial Resources, Mental Health, and Motivation on Frontline Workers’ Burden Reduction and Prioritizations</a></div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>个案工作者会不会根据求助者的经济状况、心理健康和积极程度，调整其需要承担的手续负担和服务优先级？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要结果</span><div>对 39 家丹麦失业服务机构的 775 名个案工作者进行预注册情境实验。工作人员更愿意为有心理健康问题、积极性较高的求助者减负并优先处理；经济困难也有一定影响。心理健康影响最大。心理健康问题与低积极性同时出现时，求助者反而得到更多支持，可能因为低积极性被看作病情造成的困难信号。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">为什么重要（白话）</span><div>办事人员的裁量会影响谁更快得到帮助。结果提示服务规则和工作人员培训应识别“低积极性可能源于健康问题”，以免把需要误当成不配合。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文阅读</span><div>非开放获取。未读全文；以上依据期刊摘要。</div></div>
+</div></details></div>
           <p class="source-note">来源：<a href="https://academic.oup.com/JPART/advance-articles">JPART Advance Articles</a> 与 <a href="https://doi.org/10.1093/jopart/muag040">论文页面及摘要</a>。</p>
         </section>
 
 <section id="daily-digest-2026-11-03" aria-labelledby="daily-digest-2026-11-03-title" style="padding:30px 0;border-bottom:1px solid var(--line)">
           <div class="section-head"><div><div class="section-kicker">Journal update · 2026-11-03</div><h2 id="daily-digest-2026-11-03-title">每日期刊快报</h2></div><div class="result-count">检索区间：2026-11-02 — 2026-11-03</div></div>
           <p style="max-width:850px;color:#55645c;font-size:13px;line-height:1.9">本次核对四刊官方期刊页、Early View／Advance Articles 页面与出版商元数据，未发现 11 月 2 日之后新上线、且符合收录规则的研究论文。JPART 页面可见的 10 月 31 日内容是更正通知，属于排除项；其余最新研究条目均早于本期检索区间，且已在知识库前次摘要或补录中覆盖。</p>
-          <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;background:var(--surface);font-size:12px;line-height:1.7"><thead><tr style="text-align:left;color:var(--green)"><th style="padding:11px;border-bottom:1px solid var(--line)">期刊</th><th style="padding:11px;border-bottom:1px solid var(--line)">本期核对结果</th><th style="padding:11px;border-bottom:1px solid var(--line)">官方来源</th></tr></thead><tbody>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)">PAR</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增；最近研究条目 10 月 28 日，已收录</td><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td></tr>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)">JPART</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增研究论文；10 月 31 日更正通知排除</td><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td></tr>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)">PA</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增；官网最近可见研究文章日期为 9 月 27 日</td><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td></tr>
-          <tr><td style="padding:11px">JPAM</td><td style="padding:11px">无新增；10 月 28 日和 30 日的研究论文已在 11 月 2 日补录</td><td style="padding:11px"><a href="https://onlinelibrary.wiley.com/journal/15206688">期刊文章列表</a></td></tr>
-          </tbody></table></div>
+          <div class="st-wrap"><table class="st"><thead><tr><th>期刊</th><th>本期核对结果</th><th>官方来源</th></tr></thead><tbody><tr><td data-label="期刊">PAR</td><td data-label="本期核对结果">无新增；最近研究条目 10 月 28 日，已收录</td><td data-label="官方来源"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td></tr><tr><td data-label="期刊">JPART</td><td data-label="本期核对结果">无新增研究论文；10 月 31 日更正通知排除</td><td data-label="官方来源"><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td></tr><tr><td data-label="期刊">PA</td><td data-label="本期核对结果">无新增；官网最近可见研究文章日期为 9 月 27 日</td><td data-label="官方来源"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td></tr><tr><td data-label="期刊">JPAM</td><td data-label="本期核对结果">无新增；10 月 28 日和 30 日的研究论文已在 11 月 2 日补录</td><td data-label="官方来源"><a href="https://onlinelibrary.wiley.com/journal/15206688">期刊文章列表</a></td></tr></tbody></table></div>
           <p style="margin:12px 0 0;color:#718079;font-size:10px">本期结论：没有符合条件的新文章，因此无全文阅读项。前次摘要与补录保留在下方归档区。</p>
         </section>
 
         <section id="daily-digest-2026-11-02" aria-labelledby="daily-digest-2026-11-02-title" style="padding:30px 0;border-bottom:1px solid var(--line)">
           <div class="section-head"><div><div class="section-kicker">Journal update · 2026-11-02</div><h2 id="daily-digest-2026-11-02-title">每日期刊快报</h2></div><div class="result-count">检索区间：2026-11-01 — 2026-11-02</div></div>
           <p style="max-width:850px;color:#55645c;font-size:13px;line-height:1.9">本次核对四刊官方 Early View／Advance Articles 页面及出版商元数据，未发现 11 月 1 日之后新上线的合格研究论文。JPART 页面出现一条 10 月 31 日更正通知，因属于更正而排除；PAR、PA、JPAM 当前列表也没有 11 月 1 日之后的新研究论文。</p>
-          <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;background:var(--surface);font-size:12px;line-height:1.7"><thead><tr style="text-align:left;color:var(--green)"><th style="padding:11px;border-bottom:1px solid var(--line)">期刊</th><th style="padding:11px;border-bottom:1px solid var(--line)">本期结果</th><th style="padding:11px;border-bottom:1px solid var(--line)">官方列表</th></tr></thead><tbody>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)">PAR</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增合格研究论文</td><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td></tr>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)">JPART</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增合格研究论文；10 月 31 日更正通知排除</td><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td></tr>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)">PA</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增合格研究论文</td><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td></tr>
-          <tr><td style="padding:11px">JPAM</td><td style="padding:11px">无 11 月 1 日后新文</td><td style="padding:11px"><a href="https://onlinelibrary.wiley.com/journal/15206688">期刊文章列表</a></td></tr>
-          </tbody></table></div>
+          <div class="st-wrap"><table class="st"><thead><tr><th>期刊</th><th>本期结果</th><th>官方列表</th></tr></thead><tbody><tr><td data-label="期刊">PAR</td><td data-label="本期结果">无新增合格研究论文</td><td data-label="官方列表"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">Early View</a></td></tr><tr><td data-label="期刊">JPART</td><td data-label="本期结果">无新增合格研究论文；10 月 31 日更正通知排除</td><td data-label="官方列表"><a href="https://academic.oup.com/JPART/advance-articles">Advance Articles</a></td></tr><tr><td data-label="期刊">PA</td><td data-label="本期结果">无新增合格研究论文</td><td data-label="官方列表"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">Early View</a></td></tr><tr><td data-label="期刊">JPAM</td><td data-label="本期结果">无 11 月 1 日后新文</td><td data-label="官方列表"><a href="https://onlinelibrary.wiley.com/journal/15206688">期刊文章列表</a></td></tr></tbody></table></div>
           <h3 style="margin:24px 0 10px;font:400 20px var(--serif)">前次七日回溯漏收：JPAM 两篇补录</h3>
           <p style="max-width:850px;color:#718079;font-size:11px;line-height:1.8">以下文章于 10 月 28 日和 30 日上线，落在 10 月 25 日至 11 月 1 日的回溯窗口，但未进入前次摘要；现补充到文章库。它们不是本期新上线论文。全文列只在确实读到可用全文时标为全文依据。</p>
-          <div style="overflow-x:auto"><table style="width:100%;min-width:1080px;border-collapse:collapse;background:var(--surface);font-size:12px;line-height:1.7"><thead><tr style="text-align:left;color:var(--green)"><th style="padding:11px;border-bottom:1px solid var(--line)">期刊／文章</th><th style="padding:11px;border-bottom:1px solid var(--line)">类型与日期</th><th style="padding:11px;border-bottom:1px solid var(--line)">研究问题</th><th style="padding:11px;border-bottom:1px solid var(--line)">摘要主要结果</th><th style="padding:11px;border-bottom:1px solid var(--line)">白话解释：为什么重要</th><th style="padding:11px;border-bottom:1px solid var(--line)">全文补充</th></tr></thead><tbody>
-          <tr><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)"><strong>JPAM</strong><br><a href="https://doi.org/10.1002/pam.70129">An Informational Letter From the Federal Government Increases Naturalization Submissions</a><br>Oded Gurantz、Amanda Girard、Elisa Cascardi、Sofia Avila、Tomás R. Jiménez</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">研究论文；10 月 30 日</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">政府寄出信息加鼓励信，能否让符合条件的永久居民更愿意申请入籍？</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">预注册全国随机试验显示，给 186 万名拥有绿卡 6–9 年的人寄信，使入籍申请率提高 1 个百分点（相对提高 12%）。效果在各组均为正，但高收入邮编家庭、未申请费用减免者的提升更大。</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">把流程和下一步讲清楚、并主动鼓励申请，确实能推动一部分人行动；但经济、时间和费用障碍仍会限制效果。</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">非开放获取；摘要级总结。试验设计与样本数来自摘要。</td></tr>
-          <tr><td style="padding:11px;vertical-align:top"><strong>JPAM</strong><br><a href="https://doi.org/10.1002/pam.70137">Discrimination in Bureaucratic Recruitment Under Civil Service Exams</a><br>Thorbjørn Sejr Guul、Jens Lemb</td><td style="padding:11px;vertical-align:top">研究论文；10 月 28 日；开放获取</td><td style="padding:11px;vertical-align:top">公务员考试是否能让少数族裔与成绩相近的白人候选人得到公平的录用和起薪？</td><td style="padding:11px;vertical-align:top">摘要称，在纽约市政府中，考试分数相近时，黑人与西语裔候选人被录用的可能性略高；但少数族裔新员工起薪较低，考试成绩带来的薪酬回报也较小。</td><td style="padding:11px;vertical-align:top">标准化考试可能减少招聘阶段的主观裁量，但公平不能只看谁被录用；薪酬怎么定，也可能留下不平等。</td><td style="padding:11px;vertical-align:top"><strong>全文依据：<a href="https://findresearcher.sdu.dk/ws/portalfiles/portal/252497254/phd_dissertation_redacted.pdf">作者公开博士论文中对应研究章节</a>（2023 年早期稿，非 2026 期刊排版版）</strong>。纽约市 2014–2021 年候选人与新员工行政数据（候选人 141,006；新员工 22,493）；按考试候选名单固定效应比较，并用 OLS 检验录用与起薪。早期全文显示，黑人与西语裔候选人在录用上没有劣势（部分比较略占优），但少数族裔薪酬起点较低、考试分数的薪酬回报较小。期刊页标开放获取；本次出版社全文链接无法载入，故全文细节以作者公开早期稿为依据。</td></tr>
-          </tbody></table></div>
+          <div class="dw"><details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">JPAM</span><span class="dr-type">研究论文；10 月 30 日</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1002/pam.70129" target="_blank" rel="noopener">An Informational Letter From the Federal Government Increases Naturalization Submissions</a></div><div class="dr-auth">Oded Gurantz、Amanda Girard、Elisa Cascardi、Sofia Avila、Tomás R. Jiménez</div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>政府寄出信息加鼓励信，能否让符合条件的永久居民更愿意申请入籍？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要主要结果</span><div>预注册全国随机试验显示，给 186 万名拥有绿卡 6–9 年的人寄信，使入籍申请率提高 1 个百分点（相对提高 12%）。效果在各组均为正，但高收入邮编家庭、未申请费用减免者的提升更大。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">白话解释：为什么重要</span><div>把流程和下一步讲清楚、并主动鼓励申请，确实能推动一部分人行动；但经济、时间和费用障碍仍会限制效果。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文补充</span><div>非开放获取；摘要级总结。试验设计与样本数来自摘要。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">JPAM</span><span class="dr-type">研究论文；10 月 28 日；开放获取</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1002/pam.70137" target="_blank" rel="noopener">Discrimination in Bureaucratic Recruitment Under Civil Service Exams</a></div><div class="dr-auth">Thorbjørn Sejr Guul、Jens Lemb</div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>公务员考试是否能让少数族裔与成绩相近的白人候选人得到公平的录用和起薪？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要主要结果</span><div>摘要称，在纽约市政府中，考试分数相近时，黑人与西语裔候选人被录用的可能性略高；但少数族裔新员工起薪较低，考试成绩带来的薪酬回报也较小。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">白话解释：为什么重要</span><div>标准化考试可能减少招聘阶段的主观裁量，但公平不能只看谁被录用；薪酬怎么定，也可能留下不平等。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文补充</span><div><strong>全文依据：<a href="https://findresearcher.sdu.dk/ws/portalfiles/portal/252497254/phd_dissertation_redacted.pdf">作者公开博士论文中对应研究章节</a>（2023 年早期稿，非 2026 期刊排版版）</strong>。纽约市 2014–2021 年候选人与新员工行政数据（候选人 141,006；新员工 22,493）；按考试候选名单固定效应比较，并用 OLS 检验录用与起薪。早期全文显示，黑人与西语裔候选人在录用上没有劣势（部分比较略占优），但少数族裔薪酬起点较低、考试分数的薪酬回报较小。期刊页标开放获取；本次出版社全文链接无法载入，故全文细节以作者公开早期稿为依据。</div></div>
+</div></details></div>
           <p style="margin:12px 0 0;color:#718079;font-size:10px">来源类型：四刊官方期刊页／出版商记录；全文补充链接至作者所在大学公开的对应论文全文。以上补录会保留在文章库与本期归档中。</p>
         </section>
 
@@ -279,11 +396,39 @@
           <div class="section-head"><div><div class="section-kicker">Seven-day review · 2026-10-25 — 2026-11-01</div><h2 id="weekly-digest-title">近七日新文献</h2></div><div class="result-count">3 篇合格研究文章</div></div>
           <p style="max-width:850px;color:#55645c;font-size:13px;line-height:1.9">回溯 2026 年 10 月 25 日至 11 月 1 日（含首尾），逐一核对 PAR、JPART、PA 与 JPAM 的官方 Early View／Advance Articles 页面和出版商文章记录。共确认 3 篇研究文章，来自 PAR 与 JPART；PA、JPAM 在该区间未见符合条件的新文。以下按摘要概述研究问题、主要发现和实际意义。</p>
           <p style="margin:0 0 14px;color:#718079;font-size:10px;line-height:1.7">期刊范围已扩展至十刊。本期七日回顾保留当时的四刊检索口径；新增的 Governance、PSJ、PMR、PPMG、Regulation &amp; Governance、PPMR 纳入后续追踪，不回填未经核对的历史结果。</p>
-          <div style="overflow-x:auto"><table style="width:100%;min-width:1000px;border-collapse:collapse;background:var(--surface);font-size:12px;line-height:1.7"><thead><tr style="text-align:left;color:var(--green)"><th style="padding:11px;border-bottom:1px solid var(--line)">期刊／文章</th><th style="padding:11px;border-bottom:1px solid var(--line)">类型与日期</th><th style="padding:11px;border-bottom:1px solid var(--line)">研究问题</th><th style="padding:11px;border-bottom:1px solid var(--line)">摘要主要发现</th><th style="padding:11px;border-bottom:1px solid var(--line)">白话解释：为什么重要</th><th style="padding:11px;border-bottom:1px solid var(--line)">全文情况</th></tr></thead><tbody>
-          <tr><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)"><strong>JPART</strong><br><a href="https://doi.org/10.1093/jopart/muag038">Every Mile Counts: Geographical Distance as Administrative Burden in Intellectual Property Services</a><br>Shenghua Lu</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">研究论文；10 月 29 日</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">把商标受理服务从北京下放到地方，是否会让更多企业申请商标？</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">中国 2016–2019 年设立地方受理窗口后，商标申请增加约 4.4%（仅 2019 年约多 20.9 万件）。中小企业反应更强；新增申请主要来自基础设施较薄弱的城市。分析认为增长主要来自距离缩短，而非行政效率或腐败变化。</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">办事地点远近本身就是行政负担。把服务点设近，尤其可能帮助资源较少的企业使用原本“名义上开放、实际上难办”的服务。</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">非开放获取；依据摘要整理。全文未读。</td></tr>
-          <tr><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)"><strong>JPART</strong><br><a href="https://doi.org/10.1093/jopart/muag036">Sick of change? Sickness absence following ownership conversions in Norwegian kindergartens</a><br>Håvard Thorsen Rydland、Dag Arne Christensen</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">研究论文；10 月 28 日</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">幼儿园改变所有权后，员工病假会怎样变化？</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">摘要报告：利用挪威 2015–2019 年儿童照护行政数据及分期双重差分，非营利机构转为营利机构后病假增加；公立转为营利机构的结果不一致。作者认为组织使命与员工价值观的契合可能有助解释差异。</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">服务机构换了经营者，影响的不只有成本和服务对象，也可能影响员工健康。研究提示，公私之分未必最关键，机构使命的变化也值得留意。</td><td style="padding:11px;vertical-align:top;border-bottom:1px solid var(--line)">开放获取标记／CC BY；页面只提供 PDF，本次无法读取 PDF，故此处仍是摘要级总结，未称全文结论。</td></tr>
-          <tr><td style="padding:11px;vertical-align:top"><strong>PAR</strong><br><a href="https://doi.org/10.1111/puar.70230">Dueling Political Fictions and Public Administration and Democracy in an Era of Populism and Authoritarian Impulses</a><br>Michael W. Spicer</td><td style="padding:11px;vertical-align:top">研究论文（规范性／理论论证）；10 月 28 日</td><td style="padding:11px;vertical-align:top">面对民粹主义与威权倾向，公共行政应怎样理解民主责任？</td><td style="padding:11px;vertical-align:top">作者借英国内战时期的政治思想指出，公共行政过度依赖“单一且不受限制的人民主权”观念，会难以应对民粹政府的威权冲动；他主张以宪政主义和个人权利补足行政中立的伦理框架。</td><td style="padding:11px;vertical-align:top">政府以“人民意志”为名行事时，行政人员仍要面对宪法约束和个人权利。文章提醒读者：民主治理不只是多数人作决定，也包括限制权力。</td><td style="padding:11px;vertical-align:top">Wiley 标为开放获取；全文页面此次显示技术错误，下载稿也无法取得。摘要与公开作者稿说明显示这是历史／政治理论论证；未能核对全文细节。</td></tr>
-          </tbody></table></div>
+          <div class="dw"><details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">JPART</span><span class="dr-type">研究论文；10 月 29 日</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1093/jopart/muag038" target="_blank" rel="noopener">Every Mile Counts: Geographical Distance as Administrative Burden in Intellectual Property Services</a></div><div class="dr-auth">Shenghua Lu</div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>把商标受理服务从北京下放到地方，是否会让更多企业申请商标？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要主要发现</span><div>中国 2016–2019 年设立地方受理窗口后，商标申请增加约 4.4%（仅 2019 年约多 20.9 万件）。中小企业反应更强；新增申请主要来自基础设施较薄弱的城市。分析认为增长主要来自距离缩短，而非行政效率或腐败变化。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">白话解释：为什么重要</span><div>办事地点远近本身就是行政负担。把服务点设近，尤其可能帮助资源较少的企业使用原本“名义上开放、实际上难办”的服务。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文情况</span><div>非开放获取；依据摘要整理。全文未读。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">JPART</span><span class="dr-type">研究论文；10 月 28 日</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1093/jopart/muag036" target="_blank" rel="noopener">Sick of change? Sickness absence following ownership conversions in Norwegian kindergartens</a></div><div class="dr-auth">Håvard Thorsen Rydland、Dag Arne Christensen</div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>幼儿园改变所有权后，员工病假会怎样变化？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要主要发现</span><div>摘要报告：利用挪威 2015–2019 年儿童照护行政数据及分期双重差分，非营利机构转为营利机构后病假增加；公立转为营利机构的结果不一致。作者认为组织使命与员工价值观的契合可能有助解释差异。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">白话解释：为什么重要</span><div>服务机构换了经营者，影响的不只有成本和服务对象，也可能影响员工健康。研究提示，公私之分未必最关键，机构使命的变化也值得留意。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文情况</span><div>开放获取标记／CC BY；页面只提供 PDF，本次无法读取 PDF，故此处仍是摘要级总结，未称全文结论。</div></div>
+</div></details>
+<details class="dr">
+<summary><div class="dr-main">
+<div class="dr-top"><span class="dr-j">PAR</span><span class="dr-type">研究论文（规范性／理论论证）；10 月 28 日</span></div>
+<div class="dr-title"><a href="https://doi.org/10.1111/puar.70230" target="_blank" rel="noopener">Dueling Political Fictions and Public Administration and Democracy in an Era of Populism and Authoritarian Impulses</a></div><div class="dr-auth">Michael W. Spicer</div>
+<div class="dr-q"><span class="dr-ql">研究问题</span>面对民粹主义与威权倾向，公共行政应怎样理解民主责任？</div>
+</div><span class="dr-chev" aria-hidden="true">+</span></summary>
+<div class="dr-body">
+<div class="dr-field"><span class="dr-fl">摘要主要发现</span><div>作者借英国内战时期的政治思想指出，公共行政过度依赖“单一且不受限制的人民主权”观念，会难以应对民粹政府的威权冲动；他主张以宪政主义和个人权利补足行政中立的伦理框架。</div></div>
+<div class="dr-field dr-why"><span class="dr-fl">白话解释：为什么重要</span><div>政府以“人民意志”为名行事时，行政人员仍要面对宪法约束和个人权利。文章提醒读者：民主治理不只是多数人作决定，也包括限制权力。</div></div>
+<div class="dr-field dr-src"><span class="dr-fl">全文情况</span><div>Wiley 标为开放获取；全文页面此次显示技术错误，下载稿也无法取得。摘要与公开作者稿说明显示这是历史／政治理论论证；未能核对全文细节。</div></div>
+</div></details></div>
           <p style="margin:12px 0 0;color:#718079;font-size:10px">全文透明说明：已按开放获取标记尝试读取两篇 OA 论文。出版社页面分别只返回 PDF 访问限制／技术错误，因此没有把摘要概述冒充为全文阅读结果。期刊记录和文章链接见各标题。</p>
         </section>
 
@@ -291,12 +436,7 @@
           <div class="section-head"><div><div class="section-kicker">Journal update · 2026-11-01</div><h2 id="digest-title">每日期刊快报</h2></div><div class="result-count">检索区间：2026-11-01（前次摘要截至 10-31）</div></div>
           <p style="max-width:780px;color:#55645c;font-size:13px;line-height:1.9">本次核对四刊官网的 Early View、Advance Articles 与出版商文章元数据。未发现 2026 年 11 月 1 日新上线、且尚未在前次摘要覆盖的合格研究文章。下面列出各刊官网当前可见的最近上线日期，供回查；这些文章均早于本期检索区间。</p>
           <p style="margin:0 0 14px;color:#718079;font-size:10px;line-height:1.7">本期日报仍按原四刊范围记录；新增六刊从后续快报开始纳入核对。</p>
-          <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;background:var(--surface);font-size:12px;line-height:1.7"><thead><tr style="text-align:left;color:var(--green)"><th style="padding:11px;border-bottom:1px solid var(--line)">期刊</th><th style="padding:11px;border-bottom:1px solid var(--line)">官网最近可见上线</th><th style="padding:11px;border-bottom:1px solid var(--line)">本期结果</th></tr></thead><tbody>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">PAR · Public Administration Review</a></td><td style="padding:11px;border-bottom:1px solid var(--line)">2026-10-28</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增合格文章</td></tr>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://academic.oup.com/JPART/advance-articles">JPART · Journal of Public Administration Research and Theory</a></td><td style="padding:11px;border-bottom:1px solid var(--line)">2026-10-29</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增合格文章</td></tr>
-          <tr><td style="padding:11px;border-bottom:1px solid var(--line)"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">PA · Public Administration</a></td><td style="padding:11px;border-bottom:1px solid var(--line)">2026-09-27</td><td style="padding:11px;border-bottom:1px solid var(--line)">无新增合格文章</td></tr>
-          <tr><td style="padding:11px"><a href="https://onlinelibrary.wiley.com/journal/15206688">JPAM · Journal of Policy Analysis and Management</a></td><td style="padding:11px">2026-09-03</td><td style="padding:11px">无新增合格文章</td></tr>
-          </tbody></table></div>
+          <div class="st-wrap"><table class="st"><thead><tr><th>期刊</th><th>官网最近可见上线</th><th>本期结果</th></tr></thead><tbody><tr><td data-label="期刊"><a href="https://onlinelibrary.wiley.com/toc/15406210/0/0">PAR · Public Administration Review</a></td><td data-label="官网最近可见上线">2026-10-28</td><td data-label="本期结果">无新增合格文章</td></tr><tr><td data-label="期刊"><a href="https://academic.oup.com/JPART/advance-articles">JPART · Journal of Public Administration Research and Theory</a></td><td data-label="官网最近可见上线">2026-10-29</td><td data-label="本期结果">无新增合格文章</td></tr><tr><td data-label="期刊"><a href="https://onlinelibrary.wiley.com/toc/14679299/0/0">PA · Public Administration</a></td><td data-label="官网最近可见上线">2026-09-27</td><td data-label="本期结果">无新增合格文章</td></tr><tr><td data-label="期刊"><a href="https://onlinelibrary.wiley.com/journal/15206688">JPAM · Journal of Policy Analysis and Management</a></td><td data-label="官网最近可见上线">2026-09-03</td><td data-label="本期结果">无新增合格文章</td></tr></tbody></table></div>
           <p style="margin:12px 0 0;color:#718079;font-size:10px">说明：按文章上线日期核对；排除社论、书评、征稿及前次已摘要的文章。本页记录摘要日期与检索范围，后续快报会继续追加。</p>
         </section>
 
@@ -343,7 +483,7 @@
               </section>
               <section class="aside-card about-card" id="about">
                 <h3 class="aside-title">让知识持续生长</h3>
-                <p>这里收录可检索的论文线索，并逐步补充研究问题、核心发现与全文入口。目前已加入 2026 年 10 月 25 日至 11 月 1 日的三篇期刊研究摘要。</p>
+                <p>这里收录可检索的论文线索，并逐步补充研究问题、核心发现与全文入口。目前已收录 5 篇可检索论文条目，并保留 2026 年 11 月 1 日至 11 月 6 日的每日期刊快报与七日摘要。</p>
                 <a href="https://github.com/pa-knowledge-bank/pa-knowledge-bank.github.io">了解项目与收录方式 ↗</a>
               </section>
             </aside>
@@ -359,7 +499,7 @@
     const papers = [
       { title: "Every Mile Counts: Geographical Distance as Administrative Burden in Intellectual Property Services", authors: "Shenghua Lu", journal: "JPART", year: "2026", dateAdded: "2026-11-01", abstract: "中国 2016–2019 年商标地方受理窗口改革使商标申请增加约 4.4%（2019 年约多 20.9 万件）。中小企业反应更强，新增申请集中在基础设施较薄弱城市；摘要称主要机制是办事距离缩短。", topics: ["行政负担", "政策分析"], url: "https://doi.org/10.1093/jopart/muag038" },
       { title: "Sick of change? Sickness absence following ownership conversions in Norwegian kindergartens", authors: "Håvard Thorsen Rydland; Dag Arne Christensen", journal: "JPART", year: "2026", dateAdded: "2026-11-01", abstract: "基于挪威 2015–2019 年儿童照护行政数据的分期双重差分分析发现，非营利幼儿园转为营利后员工病假增加；公立转营利的结果不一致。出版社标为开放获取，但本次无法读取 PDF，故为摘要总结。", topics: ["公共组织", "组织"], url: "https://doi.org/10.1093/jopart/muag036" },
-      { title: "Dueling Political Fictions and Public Administration and Democracy in an Era of Populism and Authoritarian Impulses", authors: "Michael W. Spicer", journal: "PAR", year: "2026", dateAdded: "2026-11-01", abstract: "作者借英国内战时期政治思想提出：公共行政应以宪政主义和个人权利补足行政中立，以应对民粹主义的威权倾向。理论性文章；Wiley 全文页面此次技术错误，摘要级整理。", topics: ["治理", "民主"], url: "https://doi.org/10.1111/puar.70230" }
+      { title: "Dueling Political Fictions and Public Administration and Democracy in an Era of Populism and Authoritarian Impulses", authors: "Michael W. Spicer", journal: "PAR", year: "2026", dateAdded: "2026-11-01", abstract: "作者借英国内战时期政治思想提出：公共行政应以宪政主义和个人权利补足行政中立，以应对民粹主义的威权倾向。理论性文章；Wiley 全文页面此次技术错误，摘要级整理。", topics: ["治理", "民主"], url: "https://doi.org/10.1111/puar.70230" },
       { title: "An Informational Letter From the Federal Government Increases Naturalization Submissions", authors: "Oded Gurantz; Amanda Girard; Elisa Cascardi; Sofia Avila; Tomás R. Jiménez", journal: "JPAM", year: "2026", dateAdded: "2026-11-02", abstract: "预注册全国随机试验发现，给 186 万名拥有绿卡 6–9 年的居民寄出信息与鼓励信，使入籍申请率提高 1 个百分点（相对 12%）。摘要显示，经济与时间限制仍影响申请。", topics: ["行政负担", "政策分析"], url: "https://doi.org/10.1002/pam.70129" },
       { title: "Discrimination in Bureaucratic Recruitment Under Civil Service Exams", authors: "Thorbjørn Sejr Guul; Jens Lemb", journal: "JPAM", year: "2026", dateAdded: "2026-11-02", abstract: "纽约市政府招聘研究显示，考试成绩相近时黑人和西语裔候选人的录用率略高于白人，但少数族裔新员工起薪较低，考试分数带来的薪酬回报也较小。OA；全文依据作者公开博士论文早期稿，期刊版全文链接本次无法载入。", topics: ["公共组织", "公平"], url: "https://doi.org/10.1002/pam.70137" },
     ];
