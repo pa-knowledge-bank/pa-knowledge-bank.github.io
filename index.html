@@ -40,6 +40,7 @@
     .brand-name small { display: block; margin-top: 5px; color: #b5c5ba; font: 9px/1.2 system-ui,sans-serif; letter-spacing: .13em; text-transform: uppercase; }
     .side-label { margin: 54px 0 14px 12px; color: #99afa1; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
     .side-nav { display: grid; gap: 6px; }
+    .journal-nav { display: contents; }
     .side-nav a { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 6px; color: #ced8d0; font-size: 13px; text-decoration: none; transition: background .18s,color .18s; }
     .side-nav a:hover, .side-nav a[aria-current="page"] { background: #315346; color: #fffefa; }
     .nav-icon { width: 18px; text-align: center; color: #d8bd92; font-size: 15px; }
@@ -134,6 +135,7 @@
       .brand-mark { width: 34px; height: 34px; }
       .side-label, .side-bottom { display: none; }
       .side-nav { display: flex; flex-wrap: wrap; gap: 5px 6px; margin-top: 13px; overflow-x: visible; }
+      .journal-nav { display: contents; }
       .side-nav a { flex: 0 0 auto; padding: 7px 9px; font-size: 11px; }
       .nav-icon { display: none; }
       .side-nav-sep { flex: 0 0 100%; padding: 10px 2px 1px; }
@@ -234,18 +236,7 @@
       <nav class="side-nav">
         <a href="#library" aria-current="page"><span class="nav-icon">⌕</span>文章检索</a>
         <div class="side-nav-sep">Journals</div>
-        <a href="#library" data-journal="PAR"><span class="nav-icon">▪</span>PAR<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="JPART"><span class="nav-icon">▪</span>JPART<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="PA"><span class="nav-icon">▪</span>PA<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="JPAM"><span class="nav-icon">▪</span>JPAM<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="GOV"><span class="nav-icon">▪</span>GOV<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="PSJ"><span class="nav-icon">▪</span>PSJ<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="PMR"><span class="nav-icon">▪</span>PMR<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="PPMG"><span class="nav-icon">▪</span>PPMG<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="R&amp;G"><span class="nav-icon">▪</span>R&amp;G<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="PPMR"><span class="nav-icon">▪</span>PPMR<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="AER"><span class="nav-icon">▪</span>AER<span class="nav-badge"></span></a>
-        <a href="#library" data-journal="OS"><span class="nav-icon">▪</span>OS<span class="nav-badge"></span></a>
+        <div class="journal-nav" id="journal-nav"></div>
         <a href="#journals"><span class="nav-icon">▤</span>期刊范围</a>
         <a href="#about"><span class="nav-icon">↗</span>关于知识库</a>
       </nav>
@@ -601,7 +592,7 @@
           </div>
           <form class="search-panel" id="search-form" role="search">
             <label class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><span class="sr-only">搜索文章</span><input class="search-input" id="search-input" type="search" placeholder="搜索标题、作者、主题或关键词" autocomplete="off"></label>
-            <label><span class="sr-only">选择期刊</span><select class="journal-select" id="journal-select"><option value="">全部期刊</option><option value="PAR">Public Administration Review</option><option value="JPART">Journal of Public Administration Research and Theory</option><option value="PA">Public Administration</option><option value="JPAM">Journal of Policy Analysis and Management</option><option value="GOV">Governance</option><option value="PSJ">Policy Studies Journal</option><option value="PMR">Public Management Review</option><option value="PPMG">Perspectives on Public Management and Governance</option><option value="R&amp;G">Regulation &amp; Governance</option><option value="PPMR">Public Performance &amp; Management Review</option><option value="AER">American Economic Review</option><option value="GIQ">Government Information Quarterly</option><option value="OS">Organization Studies</option><option value="SSCR">Social Science Computer Review</option><option value="AJS">American Journal of Sociology</option><option value="APSR">American Political Science Review</option></select></label>
+            <label><span class="sr-only">选择期刊</span><select class="journal-select" id="journal-select"><option value="">全部期刊</option></select></label>
             <button class="search-button" type="submit">搜索文章 <span aria-hidden="true">→</span></button>
           </form>
           <div class="filter-line">
@@ -621,23 +612,12 @@
             <div class="paper-list" id="paper-list" aria-live="polite"></div>
             <aside class="aside">
               <section class="aside-card" id="journals" aria-labelledby="journal-heading">
-                <h3 class="aside-title" id="journal-heading">关注期刊</h3>
-                <div class="journal-list">
-                  <div class="journal-row"><div><div class="journal-acronym">PAR</div><div class="journal-name">Public Administration Review</div></div><span class="journal-state">期刊范围</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">JPART</div><div class="journal-name">Journal of Public Administration Research and Theory</div></div><span class="journal-state">期刊范围</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">PA</div><div class="journal-name">Public Administration</div></div><span class="journal-state">期刊范围</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">JPAM</div><div class="journal-name">Journal of Policy Analysis and Management</div></div><span class="journal-state">期刊范围</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">Governance</div><div class="journal-name">Governance</div></div><span class="journal-state">纳入追踪</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">PSJ</div><div class="journal-name">Policy Studies Journal</div></div><span class="journal-state">纳入追踪</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">PMR</div><div class="journal-name">Public Management Review</div></div><span class="journal-state">纳入追踪</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">PPMG</div><div class="journal-name">Perspectives on Public Management and Governance</div></div><span class="journal-state">纳入追踪</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">R&amp;G</div><div class="journal-name">Regulation &amp; Governance</div></div><span class="journal-state">纳入追踪</span></div>
-                  <div class="journal-row"><div><div class="journal-acronym">PPMR</div><div class="journal-name">Public Performance &amp; Management Review</div></div><span class="journal-state">纳入追踪</span></div>
-                </div>
+                <h3 class="aside-title" id="journal-heading">文章库期刊分类</h3>
+                <div class="journal-list" id="journal-list"></div>
               </section>
               <section class="aside-card about-card" id="about">
                 <h3 class="aside-title">让知识持续生长</h3>
-                <p>这里收录可检索的论文线索，并逐步补充研究问题、核心发现与全文入口。目前已收录 5 篇可检索论文条目，并保留 2026 年 11 月 1 日至 11 月 6 日的每日期刊快报与七日摘要。</p>
+                <p id="library-meta">这里收录可检索的论文线索，并逐步补充研究问题、核心发现与全文入口。</p>
                 <a href="https://github.com/pa-knowledge-bank/pa-knowledge-bank.github.io">了解项目与收录方式 ↗</a>
               </section>
             </aside>
@@ -695,7 +675,7 @@
       { title: "Public Perceptions of Public Organization Performance: Dual Evidence from Explicit and Implicit Measures", authors: "Xuede Gao; Xiyun Shen; Haoyun Ma", journal: "PPMR", year: "2026", dateAdded: "2026-11-08", type: "研究论文（实验）", published: "2026-06-09", question: "中国民众究竟如何看待公共组织的绩效？「反公营部门偏见」是否普遍存在？", abstract: "运用社会认知的双态度模型，结合显性与隐性两种测量方式，通过两项显性实验与一项隐性实验考察中国情境下公众对公共组织绩效的感知。结果显示相比私人组织，公众对公共组织绩效持更正面的看法，呈现亲公共部门偏好而非反私营部门偏见，且该效应跨不同测量方法与情境保持稳定。研究首次将内隐联想测验用于此类测量。", why: "首次以内隐联想测验配合显性测量，发现公众呈现亲公共部门偏好而非反私营部门偏见——「反公营部门偏见」未必具有跨情境的解释力。", source: "非开放获取；依据 Crossref 元数据与出版商摘要整理，未核对全文。", topics: ["公共组织", "公平"], url: "https://doi.org/10.1080/15309576.2026.2684464" },
       { title: "Good Government: The Future of Research in the Study of Public Administration", authors: "Jos C. N. Raadschelders; Katherine Willoughby; Hongtao Yi", journal: "PPMR", year: "2026", dateAdded: "2026-11-08", type: "概念性评论", published: "2026-04-20", question: "当代公共行政聚焦文官技能与技术，是否与历史上的「良政」探讨脱节？未来研究该往哪走？", abstract: "当代公共行政研究聚焦于新职业文官的技能与技术（人事、预算、规则制定）以及组织理论、政策过程与领导力知识，这与 17、18 世纪对何为良政的探讨形成鲜明对照。文章回顾历史上良政观念的演变与 20 世纪学科发展，据此主张在承认微观、中观与宏观层次联系的前提下，复兴公共行政的概念研究。", why: "只讲人事、预算与规则制定，会丢掉学科最初的问题。复兴概念研究并打通微观、中观与宏观层次，才能重新回答政府在社会中的位置与角色。", source: "非开放获取；依据 Crossref 元数据与出版商摘要整理，未核对全文。", topics: ["治理", "公共组织"], url: "https://doi.org/10.1080/15309576.2026.2661286" },
       { title: "Organization and the Signature of Power", authors: "Mitchell Dean; Stefan Schwarzkopf", journal: "OS", year: "2026", dateAdded: "2026-11-08", type: "理论文章", published: "2026-10-21", question: "组织研究应如何理解当代权力？它连接又分隔了哪两极？", abstract: "文章提出「权力的签名」框架以增进对组织研究中政治问题的理解。作者主张当代权力形式是一种签名，它连接并分隔「法律—政治主权（最高权威）」与「经济—管理治理（实际规制）」两极，对应组织理论中正式与非正式、制度与网络等二分。该框架作为发现机制，帮助学者穿行并整合这些对立力量，而不将其化约为单一主导范式。", why: "「权力的签名」提供一个启发式工具，帮学者在法律—政治主权与经济—管理治理两极之间穿行，而不把正式/非正式、制度/网络等二分化约为单一主导范式。", source: "非开放获取；依据 Crossref 元数据与出版商摘要整理，未核对全文。", topics: ["组织", "治理"], url: "https://doi.org/10.1177/01708406261499491" },
-      { title: "Scaffolded Unlearning: Organizing the reduction of internalized stigma", authors: "Ira Chatterjee; Johanna Mair; Joakim Wincent", journal: "OS", year: "2026", dateAdded: "2026-11-08", type: "研究论文（质性案例）", published: "2026-09-08", question: "内隐污名如何在被污名者自身身上减轻？组织干预能起什么作用？", abstract: "污名限制人生机会、社会参与与福祉，但我们对污名如何通过外部评价改变而减轻的了解，远多于内隐污名如何在被污名者自身身上减轻。作者基于印度一项长期支持丧偶妇女的组织干预的质性案例，把内隐污名的减轻理论化为「支架式忘却」过程：干预通过组织替代性实践的机会，使个体接纳新的角色、关系与社会活动，同时降低偏离污名一致期待的风险。", why: "我们更懂如何改变外部评价，却不太懂如何改变自我认知。印度丧偶妇女的案例显示，组织替代性实践的机会可以「支架式」地让人逐步卸下与污名一致的期待。", source: "非开放获取；依据 Crossref 元数据与出版商摘要整理，未核对全文。", topics: ["组织", "公平"], url: "https://doi.org/10.1177/01708406261488615" }
+      { title: "Scaffolded Unlearning: Organizing the reduction of internalized stigma", authors: "Ira Chatterjee; Johanna Mair; Joakim Wincent", journal: "OS", year: "2026", dateAdded: "2026-11-08", type: "研究论文（质性案例）", published: "2026-09-08", question: "内隐污名如何在被污名者自身身上减轻？组织干预能起什么作用？", abstract: "污名限制人生机会、社会参与与福祉，但我们对污名如何通过外部评价改变而减轻的了解，远多于内隐污名如何在被污名者自身身上减轻。作者基于印度一项长期支持丧偶妇女的组织干预的质性案例，把内隐污名的减轻理论化为「支架式忘却」过程：干预通过组织替代性实践的机会，使个体接纳新的角色、关系与社会活动，同时降低偏离污名一致期待的风险。", why: "我们更懂如何改变外部评价，却不太懂如何改变自我认知。印度丧偶妇女的案例显示，组织替代性实践的机会可以「支架式」地让人逐步卸下与污名一致的期待。", source: "非开放获取；依据 Crossref 元数据与出版商摘要整理，未核对全文。", topics: ["组织", "公平"], url: "https://doi.org/10.1177/01708406261488615" },
       { title: "Emulate the Leader? Explaining Crisis Policy Change in the Canadian Federal System", authors: "Liddell Hastings", journal: "GOV", year: "2026", dateAdded: "2026-11-08", type: "研究论文", published: "2026-11-01", question: "危机中彼此独立的省级政府如何形成相似政策？谁带头，其他政府为何跟随？", abstract: "加拿大 10 省 2020—2022 年每周政策严格度与疫情病例数据的配对向量自回归分析显示，政策主要从魁北克和安大略向外扩散，也存在区域领导。", why: "即使没有中央统一指挥，地方政府也可能通过模仿少数先行者形成协调；但带头原因会因情境而异。", source: "开放获取；全文依据出版社全文。使用 129 周、10 省的政策与病例序列及配对 VAR 识别省际影响。", topics: ["危机治理", "政策扩散"], url: "https://doi.org/10.1111/gove.70159" },
       { title: "The Immortality Paradox: One-Party Dominance, Political Tenure, and Organizational Continuity in Japanese Agencies", authors: "Ayako Nakamura", journal: "GOV", year: "2026", dateAdded: "2026-11-08", type: "研究论文", published: "2026-11-01", question: "在一党长期执政、首相任期较短的日本，政府机构会不会更容易存续？", abstract: "日本政府机构大多持续存在。机构调整往往与任期较长、能够推动有限外观变动的首相相关；即使调整发生，机构通常仍延续。", why: "领导人更替或改革宣布不一定意味着机构真的消失；要区分改名微调与真正终止。", source: "非开放获取；依据出版社摘要总结。", topics: ["公共组织", "组织延续"], url: "https://doi.org/10.1111/gove.70160" },
       { title: "Agreement Helps, Disagreement Matters: Scaling Framing Function Annotation With Large Language Models", authors: "Emily Robinson; Ranadheer Malla; Chico Q. Camargo", journal: "SSCR", year: "2026", dateAdded: "2026-11-08", type: "研究论文", published: "2026-10-30", question: "大语言模型能否大规模识别文本中的问题定义、原因解释、道德评价和解决建议？", abstract: "比较 3 名人类编码员与 GPT-5、Claude 3.7、DeepSeek 对 455 条电动车社交媒体帖文的标注。模型与人类的一致度略高于人类彼此一致度，但模型标注的框架功能更多。", why: "AI 能让文本分析规模扩大，但“意见不一致”有时反映真实的多义性，不应一律当成错误。", source: "开放获取；全文依据出版社全文。研究比较 455 条帖文、3 名人类编码员和 3 个模型，并定性分析 50 条帖文。", topics: ["计算社会科学", "大语言模型", "文本分析"], url: "https://doi.org/10.1177/08944393261501889" },
@@ -732,6 +712,15 @@
     function escapeHTML(value) {
       return String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
     }
+    function renderJournalDirectory() {
+      const entries = Object.entries(journalNames);
+      journalSelect.innerHTML = '<option value="">全部期刊</option>' + entries.map(([code, name]) => `<option value="${escapeHTML(code)}">${escapeHTML(name)}</option>`).join("");
+      document.getElementById("journal-nav").innerHTML = entries.map(([code]) => `<a href="#library" data-journal="${escapeHTML(code)}"><span class="nav-icon">▪</span>${escapeHTML(code)}<span class="nav-badge"></span></a>`).join("");
+      document.getElementById("journal-list").innerHTML = entries.map(([code, name]) => `<div class="journal-row"><div><div class="journal-acronym">${escapeHTML(code)}</div><div class="journal-name">${escapeHTML(name)}</div></div><span class="journal-state">文章分类</span></div>`).join("");
+      const countByJournal = new Set(papers.map(paper => paper.journal)).size;
+      document.getElementById("library-meta").textContent = `目前收录 ${papers.length} 篇论文，涉及 ${countByJournal} 个期刊分类。文章列表、期刊筛选与导航共用同一份数据。`;
+    }
+    renderJournalDirectory();
     function filteredPapers() {
       const query = searchInput.value.trim().toLocaleLowerCase();
       return papers.filter(paper => {
